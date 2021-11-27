@@ -20,6 +20,21 @@
         <button class="btn btn-light"><img alt="MusicSnob" src="../assets/musicnote.png" width="20" height="20"></button>
       </div>
     </form>
+    <ul class="list-group">
+      <li v-for="item in items" class="list-element" v-bind:key="item.id">
+        <div class="row align-items-start">
+          <div class="col-sm-2 offset-3">
+            {{ item.date }}
+          </div>
+          <div class="col-sm-2">
+            {{ item.artist }}
+          </div>
+          <div class="col-sm-2">
+            {{ item.venue }}
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -35,12 +50,19 @@ export default {
   data() { return {
     genreInput: '',
     locationInput: '',
+    items: [],
   } },
 
   methods: {
     findEvents() {
       console.log(`Search for ${this.genreInput} events in ${this.locationInput}`);
-      axios.get('http://localhost:3000/').then(resp => {console.log(resp.data)})
+      var data = {"genre": this.genreInput, "location": this.locationInput}
+      axios({ method: "POST", url: "http://localhost:3000/api", data: data, headers: {"content-type": "text/plain" } }).then(result => { 
+          console.log(result.data) 
+          this.items = result.data
+        }).catch( error => {
+            console.error(error);
+      });
     }
   }
 }
