@@ -22,6 +22,17 @@ export default {
   name: 'EventFinder',
   props: {
     msg: String
+  },
+
+  data() { return {
+    genreInput: '',
+    zipcodeInput: '',
+  } },
+
+  methods: {
+    findEvents() {
+      console.log(`Search for ${this.genreInput} events in ${this.zipcodeInput}`);
+    }
   }
 }
 </script>
