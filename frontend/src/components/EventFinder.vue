@@ -2,13 +2,19 @@
   <div class="search">
     <h1>{{ msg }}</h1>
     <form v-on:submit.prevent="findEvents">
-      <h3>Genre</h3>
-      <div class="form-group col-sm-4 offset-4 center-block">
-        <input v-model="genreInput" type="text" id="genre-input" placeholder="genre" class="form-control text-center">
+      <div class="form-group col-sm-2 offset-5 center-block">
+        <select class="form-control" v-model="genreInput" id="genre-input">
+          <option selected disabled>Genre</option>
+          <option>Trance</option>
+          <option>House</option>
+        </select>
       </div>
-      <h3>Location</h3>
-      <div class="form-group col-sm-4 offset-4 center-block">
-        <input v-model="zipcodeInput" type="text" id="zipcode-input" placeholder="zip code" class="form-control text-center">
+      <div class="form-group col-sm-2 offset-5 center-block">
+        <select class="form-control" v-model="locationInput" id="location-input">
+          <option selected disabled>Location</option>
+          <option>San Diego</option>
+          <option>Los Angeles</option>
+        </select>
       </div>
       <div class="form-group">
         <button class="btn btn-dark">Go!</button>
@@ -28,12 +34,12 @@ export default {
 
   data() { return {
     genreInput: '',
-    zipcodeInput: '',
+    locationInput: '',
   } },
 
   methods: {
     findEvents() {
-      console.log(`Search for ${this.genreInput} events in ${this.zipcodeInput}`);
+      console.log(`Search for ${this.genreInput} events in ${this.locationInput}`);
       axios.get('http://localhost:3000/').then(resp => {console.log(resp.data)})
     }
   }
