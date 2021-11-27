@@ -1,8 +1,19 @@
 <template>
   <div class="search">
     <h1>{{ msg }}</h1>
-    <h3>Genre</h3>
-    <h3>Location</h3>
+    <form v-on:submit.prevent="findEvents">
+      <h3>Genre</h3>
+      <div class="form-group col-sm-4 offset-4 center-block">
+        <input v-model="genreInput" type="text" id="genre-input" placeholder="genre" class="form-control text-center">
+      </div>
+      <h3>Location</h3>
+      <div class="form-group col-sm-4 offset-4 center-block">
+        <input v-model="zipcodeInput" type="text" id="zipcode-input" placeholder="zip code" class="form-control text-center">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-dark">Go!</button>
+      </div>
+    </form>
   </div>
 </template>
 
