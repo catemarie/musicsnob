@@ -1,6 +1,4 @@
 <template>
-  <img alt="MusicSnob" src="./assets/musicnote.png">
-  <br><br>
   <EventFinder msg="MusicSnob"/>
 </template>
 

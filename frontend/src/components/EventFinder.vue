@@ -17,7 +17,7 @@
         </select>
       </div>
       <div class="form-group">
-        <button class="btn btn-dark">Go!</button>
+        <button class="btn btn-light"><img alt="MusicSnob" src="../assets/musicnote.png" width="20" height="20"></button>
       </div>
     </form>
   </div>
