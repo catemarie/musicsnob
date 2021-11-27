@@ -18,3 +18,5 @@ keys.txt
 main/server
 
 .DS_Store
+
+go.sum

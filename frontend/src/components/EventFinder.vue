@@ -23,14 +23,13 @@
     <ul class="list-group">
       <li v-for="item in items" class="list-element" v-bind:key="item.id">
         <div class="row align-items-start">
-          <div class="col-sm-2 offset-3">
+          <div class="col-sm-4 offset-4">
             {{ item.date }}
-          </div>
-          <div class="col-sm-2">
-            {{ item.artist }}
-          </div>
-          <div class="col-sm-2">
+            <br>
+            {{ item.artist }} 
+            <br>
             {{ item.venue }}
+            <br><br>
           </div>
         </div>
       </li>

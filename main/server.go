@@ -5,7 +5,12 @@ import (
 	"log"
 	"net/http"
 	"encoding/json"
+	"os"
+	"bufio"
+	"strings"
 )
+
+var keys []string
 
 type Event struct {
 	Artist string `json:"artist"`
@@ -32,11 +37,11 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 	var searchData Search
 
 	var searchResData []Event
-	var sampleEvent Event
-	sampleEvent.Artist = "Andrew Rayel"
-	sampleEvent.Date = "11/27/2021"
-	sampleEvent.Venue = "Academy"
-	searchResData = append(searchResData, sampleEvent)
+	//var sampleEvent Event
+	//sampleEvent.Artist = "Andrew Rayel"
+	//sampleEvent.Date = "11/27/2021"
+	//sampleEvent.Venue = "Academy"
+	//searchResData = append(searchResData, sampleEvent)
 
     decoder := json.NewDecoder(r.Body)
 
@@ -44,14 +49,38 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Println(searchData.Genre)
     fmt.Println(searchData.Location)
 
+    city := strings.Replace(searchData.Location, " ", "%20", -1)
+
+    locId := getLocId("California", city, keys[0])
+    searchResData = getArtists(locId, keys[0])
+
     w.WriteHeader(http.StatusOK)
     if err := json.NewEncoder(w).Encode(searchResData); err != nil {
         panic(err)
     }
 }
 
+func readKeys(fname string) {
+	file, err := os.Open(fname)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
+
+    scanner := bufio.NewScanner(file)
+    for scanner.Scan() {
+        keys = append(keys, scanner.Text())
+    }
+
+    if err := scanner.Err(); err != nil {
+        log.Fatal(err)
+    }
+}
+
 func main() {
 	http.HandleFunc("/", homePageHandler)
+
+	readKeys("../keys.txt")
 
 	fmt.Println("Server listening on port 3000")
 	log.Panic(
