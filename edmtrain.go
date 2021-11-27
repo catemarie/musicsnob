@@ -11,14 +11,19 @@ import (
     "github.com/zmb3/spotify"
     "context"
     "strings"
+    "os"
 )
 
-func getArtistGenres(artist string, id string, secret string) []string {
+var EDMTRAIN = os.Getenv("EDMTRAIN")
+var SPOTIFYID = os.Getenv("SPOTIFYID")
+var SPOTIFYSECRET = os.Getenv("SPOTIFYSECRET")
+
+func getArtistGenres(artist string) []string {
 
     // handle credentials
     config := &clientcredentials.Config{
-        ClientID:     id,
-        ClientSecret: secret,
+        ClientID:     SPOTIFYID,
+        ClientSecret: SPOTIFYSECRET,
         TokenURL:     spotify.TokenURL,
     }
     token, err := config.Token(context.Background())
@@ -65,9 +70,9 @@ func getJson(url string) string {
     return string(body)
 
 }
-func getLocId(state string, city string, key string) string {
+func getLocId(state string, city string) string {
     
-    url := "https://edmtrain.com/api/locations?state=" + state + "&city=" + city + "&client=" + key
+    url := "https://edmtrain.com/api/locations?state=" + state + "&city=" + city + "&client=" + EDMTRAIN
     body := getJson(url)
 
     // get the location ID
@@ -77,11 +82,11 @@ func getLocId(state string, city string, key string) string {
     return locId
 }
 
-func getArtists(loc_id string, key string, id string, secret string) []Event {
+func getArtists(loc_id string) []Event {
 
     var a []Event
 
-    url := "https://edmtrain.com/api/events?locationIds=" + loc_id + "&client=" + key
+    url := "https://edmtrain.com/api/events?locationIds=" + loc_id + "&client=" + EDMTRAIN
     body := getJson(url)
 
     json_txt := gjson.Get(string(body), "data")
@@ -97,7 +102,7 @@ func getArtists(loc_id string, key string, id string, secret string) []Event {
         for _, n := range artistList.Array() {
             artist := n.Array()
             if len(artist) > 0 {
-                genres := getArtistGenres(artist[0].String(), id, secret)
+                genres := getArtistGenres(artist[0].String())
                 for _, g := range genres {
                     if (strings.Contains(g, "trance")) {
                         fmt.Println(artist[0].String())

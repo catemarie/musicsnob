@@ -6,11 +6,8 @@ import (
 	"net/http"
 	"encoding/json"
 	"os"
-	"bufio"
 	"strings"
 )
-
-var keys []string
 
 type Event struct {
 	Artist string `json:"artist"`
@@ -51,8 +48,8 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 
     city := strings.Replace(searchData.Location, " ", "%20", -1)
 
-    locId := getLocId("California", city, keys[0])
-    searchResData = getArtists(locId, keys[0], keys[1], keys[2])
+    locId := getLocId("California", city)
+    searchResData = getArtists(locId)
 
     w.WriteHeader(http.StatusOK)
     if err := json.NewEncoder(w).Encode(searchResData); err != nil {
@@ -60,27 +57,12 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
     }
 }
 
-func readKeys(fname string) {
-	file, err := os.Open(fname)
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer file.Close()
-
-    scanner := bufio.NewScanner(file)
-    for scanner.Scan() {
-        keys = append(keys, scanner.Text())
-    }
-
-    if err := scanner.Err(); err != nil {
-        log.Fatal(err)
-    }
-}
-
 func main() {
 	http.HandleFunc("/", homePageHandler)
 
-	readKeys("keys.txt")
+	fmt.Println("EDMTRAIN:", os.Getenv("EDMTRAIN"))
+	fmt.Println("SPOTIFYID:", os.Getenv("SPOTIFYID"))
+	fmt.Println("SPOTIFYSECRET:", os.Getenv("SPOTIFYSECRET"))
 
 	fmt.Println("Server listening on port 3000")
 	log.Panic(
