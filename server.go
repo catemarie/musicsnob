@@ -32,13 +32,7 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Authorization")
 
 	var searchData Search
-
 	var searchResData []Event
-	//var sampleEvent Event
-	//sampleEvent.Artist = "Andrew Rayel"
-	//sampleEvent.Date = "11/27/2021"
-	//sampleEvent.Venue = "Academy"
-	//searchResData = append(searchResData, sampleEvent)
 
     decoder := json.NewDecoder(r.Body)
 
@@ -59,13 +53,15 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", homePageHandler)
+	port := os.Getenv("PORT")
+
 
 	fmt.Println("EDMTRAIN:", os.Getenv("EDMTRAIN"))
 	fmt.Println("SPOTIFYID:", os.Getenv("SPOTIFYID"))
 	fmt.Println("SPOTIFYSECRET:", os.Getenv("SPOTIFYSECRET"))
 
-	fmt.Println("Server listening on port 3000")
+	fmt.Println("Server listening on port " + ":" + port)
 	log.Panic(
-		http.ListenAndServe(":3000", nil),
+		http.ListenAndServe(":" + port, nil),
 	)
 }

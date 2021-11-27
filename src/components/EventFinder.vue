@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+//import axios from 'axios';
 
 export default {
   name: 'EventFinder',
@@ -55,13 +55,13 @@ export default {
   methods: {
     findEvents() {
       console.log(`Search for ${this.genreInput} events in ${this.locationInput}`);
-      var data = {"genre": this.genreInput, "location": this.locationInput}
-      axios({ method: "POST", url: "http://localhost:3000/api", data: data, headers: {"content-type": "text/plain" } }).then(result => { 
-          console.log(result.data) 
-          this.items = result.data
-        }).catch( error => {
-            console.error(error);
-      });
+      //var data = {"genre": this.genreInput, "location": this.locationInput}
+      //axios({ method: "POST", url: "http://localhost:3000/api", data: data, headers: {"content-type": "text/plain" } //}).then(result => { 
+          //console.log(result.data) 
+          //this.items = result.data
+        //}).catch( error => {
+            //console.error(error);
+      //});
     }
   }
 }
