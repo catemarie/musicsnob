@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'EventFinder',
   props: {
@@ -32,6 +34,7 @@ export default {
   methods: {
     findEvents() {
       console.log(`Search for ${this.genreInput} events in ${this.zipcodeInput}`);
+      axios.get('http://localhost:3000/').then(resp => {console.log(resp.data)})
     }
   }
 }
