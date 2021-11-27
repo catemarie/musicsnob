@@ -1,15 +1,15 @@
 <template>
   <img alt="MusicSnob" src="./assets/musicnote.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <EventFinder msg="MusicSnob"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import EventFinder from './components/EventFinder.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    EventFinder
   }
 }
 </script>
