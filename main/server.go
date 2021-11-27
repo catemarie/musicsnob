@@ -52,7 +52,7 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
     city := strings.Replace(searchData.Location, " ", "%20", -1)
 
     locId := getLocId("California", city, keys[0])
-    searchResData = getArtists(locId, keys[0])
+    searchResData = getArtists(locId, keys[0], keys[1], keys[2])
 
     w.WriteHeader(http.StatusOK)
     if err := json.NewEncoder(w).Encode(searchResData); err != nil {
